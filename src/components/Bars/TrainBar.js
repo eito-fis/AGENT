@@ -1,8 +1,8 @@
 import React from 'react';
-import { usePopulate } from '../hooks/usePopulate';
-import Dropdown from './Dropdown';
-import DropdownContainer from './DropdownContainer';
-import { handleDropdownHeaderClick } from '../helper/handleDropdownHeaderClick';
+import { usePopulate } from '../../hooks/usePopulate';
+import Dropdown from '../DropDown/Dropdown';
+import DropdownContainer from '../DropDown/DropdownContainer';
+import { handleDropdownHeaderClick } from '../../helper/handleDropdownHeaderClick';
 
 const TrainBar = () => {
 

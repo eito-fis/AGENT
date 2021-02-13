@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import EnvironmentNode from "./EnvironmentNode";
-import AgentNode from "./AgentNode";
+import EnvironmentNode from "../Nodes/EnvironmentNode";
+import AgentNode from "../Nodes/AgentNode";
 import ReactFlow, { addEdge, Background, Controls } from "react-flow-renderer";
 
 const nodeTypes = {
