@@ -83,7 +83,7 @@ class DQNAgent extends Agent {
 		if (this.train && Math.random() < this.epsilon) {
 			action = Math.floor(Math.random() * this.env.getActionSpace());
 		}
-		return [logits, action];
+		return action;
 	}
 
 	// Take in number of episodes to train, update model
@@ -137,9 +137,9 @@ class DQNAgent extends Agent {
 	log(loss) {
 		this.train = false;
 		states, _, rewards, _ = this.rollout(MAXSTEPS, episodic=true);
-		this.train = true;
 		this.loggedSteps.push(states);
 		this.metrics["Losses"].push(loss);
 		this.metrics["Reward"].push(rewards.reduce((a, b) => a + b));
+		this.train = true;
 	}
 }
