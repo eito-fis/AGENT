@@ -1,48 +1,68 @@
-import React from 'react';
-import { usePopulate } from '../hooks/usePopulate';
-import Dropdown from './Dropdown';
-import DropdownContainer from './DropdownContainer';
-import Environment from './Environment';
-import { handleDropdownHeaderClick } from '../helper/handleDropdownHeaderClick';
+import React, { useState } from "react";
+import EnvironmentNode from "./EnvironmentNode";
+import AgentNode from "./AgentNode";
+import ReactFlow, { addEdge, Background, Controls } from "react-flow-renderer";
+
+const nodeTypes = {
+  EnvironmentNode: EnvironmentNode,
+  AgentNode: AgentNode,
+};
+const initialElements = [
+  {
+    id: "1",
+    type: "EnvironmentNode",
+    data: { label: "Environment" },
+    position: { x: 0, y: 0 },
+  },
+  {
+    id: "2",
+    type: "AgentNode",
+    data: { label: "Agent" },
+    position: { x: 0, y: 300 },
+    targetPosition: "right",
+    sourcePosition: "left",
+  },
+  {
+    id: "e1-2",
+    type: "step",
+    source: "1",
+    target: "2",
+    animated: true,
+    label: "State",
+  },
+  {
+    id: "e2-1",
+    type: "step",
+    source: "2",
+    target: "1",
+    animated: true,
+    label: "Action",
+  },
+];
+
+const onLoad = (reactFlowInstance) => {
+  reactFlowInstance.fitView();
+};
 
 const EnvAgentTab = () => {
-
-  // Contains 'Layers', 'Activations', 'Templates'
-  let dropdownContentArr = [
-    {
-      header: 'Layers',
-      sections: ['Dense', 'Convolution', 'Max Pooling', 'More'],
-    },
-    {
-      header: 'Activations',
-      sections: ['ReLU', 'Sigmoid', 'Tanh'],
-    },
-    {
-      header: 'Templates',
-      sections: ['Blank', 'Default', 'ResNet'],
-    },
-  ];
-
-  // Gives each dropdown content a 'visible' field set to true by default
-  const [ dropdownVisibleArr, setDropdownVisibleArr ] = usePopulate(dropdownContentArr, true, 'visible');
-
-  // When user clicks on dropdown section => TO-DO
-  const handleDropdownSectionClick = (e) => {
-    console.log(e);
-  };
-
+  const [elements, setElements] = useState(initialElements);
+  const onConnect = (params) => setElements((e) => addEdge(params, e));
   return (
     <>
-      <DropdownContainer>
-        {dropdownContentArr.map((dropdownContent, index) => 
-          <Dropdown 
-            key={index} 
-            contentObj={dropdownContent} 
-            index={index} 
-            headerCallback={handleDropdownHeaderClick.bind(null, dropdownVisibleArr, setDropdownVisibleArr)} 
-            sectionCallback={handleDropdownSectionClick} />)}
-      </DropdownContainer>
-      <Environment />
+      <ReactFlow
+        elements={elements}
+        onLoad={onLoad}
+        nodeTypes={nodeTypes}
+        style={{ width: "100%", height: "90vh" }}
+        onConnect={onConnect}
+        connectionLineStyle={{ stroke: "#ddd", strokeWidth: 2 }}
+        connectionLineType="bezier"
+        snapToGrid={true}
+        snapGrid={[16, 16]}
+      >
+        <Background color="#888" gap={16} />
+        <Controls />
+      </ReactFlow>
     </>
   );
 };
