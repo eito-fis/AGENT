@@ -1,9 +1,9 @@
 import React from 'react';
-import Dropdown from './Dropdown';
-import { usePopulate } from '../hooks/usePopulate';
-import DropdownContainer from './DropdownContainer';
-import Environment from './Environment';
-import { handleDropdownHeaderClick } from '../helper/handleDropdownHeaderClick';
+import Dropdown from '../DropDown/Dropdown';
+import { usePopulate } from '../../hooks/usePopulate';
+import DropdownContainer from '../DropDown/DropdownContainer';
+import Environment from '../Environment';
+import { handleDropdownHeaderClick } from '../../helper/handleDropdownHeaderClick';
 
 const ChartTab = () => {
 

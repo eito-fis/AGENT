@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import DropdownSection from './DropdownSection';
 import DropdownData from './DropdownData';
-import ArrowDownSVG from '../assets/images/Arrow-down.svg';
+import ArrowDownSVG from '../../assets/images/Arrow-down.svg';
 
 const Container = styled.div`
   margin-top: 10px;

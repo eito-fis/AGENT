@@ -1,11 +1,11 @@
 import React from 'react';
-import EnvAgentTab from './EnvAgentTab';
-import ChartTab from './ChartTab';
+import EnvAgentTab from './Tabs/EnvAgentTab';
+import ChartTab from './Tabs/ChartTab';
 import { Route } from 'react-router-dom';
-import VisualTab from './VisualTab';
-import TrainBar from './TrainBar';
+import VisualTab from './Tabs/VisualTab';
+import TrainBar from './Bars/TrainBar';
 import styled from 'styled-components';
-import Sidebar from './Sidebar';
+import Sidebar from './Bars/Sidebar';
 
 const Container = styled.div`
   display: flex;

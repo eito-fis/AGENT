@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import NetworkSVG from '../assets/images/layers.svg';
-import ProgressSVG from '../assets/images/graph-up.svg';
-import VisualizationSVG from '../assets/images/calculator-fill.svg';
-import GoBackSVG from '../assets/images/arrow-return-left.svg';
+import NetworkSVG from '../../assets/images/layers.svg';
+import ProgressSVG from '../../assets/images/graph-up.svg';
+import VisualizationSVG from '../../assets/images/calculator-fill.svg';
+import GoBackSVG from '../../assets/images/arrow-return-left.svg';
 import { useHistory, useLocation } from 'react-router-dom';
 
 const SidebarContainer = styled.div`
