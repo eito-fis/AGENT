@@ -34,11 +34,15 @@ class Reinforce extends Agent {
 	}
 
 	// Take in an observation, return an action
-	// Epsilon greedy if we are training
 	policy(obs) {
 		return tf.tidy(() => {
 				const logits = this.model.apply(obs);		
-				const action = tf.multinominal(logits, 1, normalized=false);
+				var action;
+				if this.train {
+					action = tf.multinominal(logits, 1, normalized=false);
+				} else {
+					action = tf.argmax(logits);
+				}
 				return action.dataSync();
 		});
 	}
@@ -60,7 +64,13 @@ class Reinforce extends Agent {
 	}
 
 	discountReward(rewards, dones) {
-		return ;
+		discReward = new Array(rewards.length);
+		reward = 0
+		for (i = rewards.length - 1; i >= 0; i--) {
+			reward = rewards[i] + this.gamma * reward * (1 - dones[i]);
+			discReward[i] = reward
+		}
+		return discReward;
 	}
 
 	// Take an update step on the model, return the loss
@@ -76,7 +86,7 @@ class Reinforce extends Agent {
 				.softmax()
 				.mul(tf.oneHot(actions, this.env.getActionSpace()))
 				.sum(-1);
-			const loss = logits
+			const loss = probs
 				.log()
 				.mul(rewards)
 				.mul(tf.scalar(-1))
@@ -84,18 +94,17 @@ class Reinforce extends Agent {
 			return loss
 		});
 
-		const {value, grads} = tf.variableGrads(lossFunc);
-		this.optimizer.applyGradients(grads);
-		tf.dispose(grads);
-		return value
+		const loss = this.optimizer.minimize(lossFunc, returnCost=true);
+
+		return loss
 	}
 
 	log(loss) {
 		this.train = false;
 		states, _, rewards, _ = this.rollout(MAXSTEPS, episodic=true);
-		this.train = true;
 		this.loggedSteps.push(states);
 		this.metrics["Losses"].push(loss);
 		this.metrics["Reward"].push(rewards.reduce((a, b) => a + b));
+		this.train = true;
 	}
 }
