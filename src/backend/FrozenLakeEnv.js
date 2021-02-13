@@ -43,6 +43,8 @@ export class FrozenLakeEnv {
     this.nA = 4;
     this.nS = this.nrow * this.ncol;
 
+    this.done = false;
+
     this.reset();
   }
 
@@ -55,11 +57,12 @@ export class FrozenLakeEnv {
 	// Returns a tesor describing the action space of the env
 	// Will be used to determine the output dimensionality of the model
 	getActionSpace() {
-    return 4;
+    return this.nA;
   }
 
 	// Resets the environment and returns the new state
 	reset() {
+    this.done = false;
     this.state = [0,0];
     return this.state;
   }
@@ -71,7 +74,10 @@ export class FrozenLakeEnv {
 
 	// Takes an action as an integer and updates the state
 	step(action) {
-    if (![1,2,3,4].includes(action)) {
+    if (this.done) {
+      alert("Environment is done. Reset.");
+    }
+    if (![0,1,2,3].includes(action)) {
       alert("Invalid action!");
     }
     var curr_pos = this.state;
@@ -93,9 +99,10 @@ export class FrozenLakeEnv {
     this.state = [row, col];
 
     if (this.desc[row][col] === "H") {
-      env.reset();
+      this.done = true;
       return [[row, col], 0, 1];
     } else if (this.desc[row][col] === "G") {
+      this.done = true;
       return [this.state, 1, 1];
     } else {
       return [this.state, 0, 0];
