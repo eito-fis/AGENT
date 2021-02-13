@@ -1,4 +1,4 @@
-import Agent from 'Agent';
+import { Agent } from './agent';
 import * as tf from '@tensorflow/tfjs';
 
 const MAXSTEPS = 1000

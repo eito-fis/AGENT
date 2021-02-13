@@ -1,4 +1,4 @@
-import { Agent } from 'Agent';
+import { Agent } from './agent';
 import * as tf from '@tensorflow/tfjs';
 
 const MAXSTEPS = 1000
@@ -35,13 +35,12 @@ class ReinforceAgent extends Agent {
 
 	// Take in an observation, return an action
 	policy(obs) {
-		return tf.tidy(() => {
+		 return tf.tidy(() => {
 				const logits = this.model.apply(obs);		
-				var action;
-				if this.train {
-					action = tf.multinominal(logits, 1, normalized=false);
+				if (this.train) {
+					const action = tf.multinominal(logits, 1, normalized=false);
 				} else {
-					action = tf.argmax(logits);
+					const action = tf.argmax(logits);
 				}
 				return action.dataSync();
 		});
