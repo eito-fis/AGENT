@@ -1,7 +1,9 @@
+import ChartTab from './components/ChartTab'
+
 function App() {
   return (
     <div>
-      <p>Hello world</p>
+      <ChartTab />
     </div>
   );
 }
