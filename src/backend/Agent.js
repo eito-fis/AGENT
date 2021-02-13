@@ -11,12 +11,13 @@ class Agent {
 		this.loggedStates = [];
 		this.metrics = {
 			"Losses": [],
-			"Average Reward": [],
+			"Reward": [],
 		}
 	}
 
 	// Initialize model
-	buildModel() {}
+	buildModel() {
+	}
 
 	// Take in an observation, return an action
 	policy() {}
@@ -49,6 +50,8 @@ class Agent {
 			}
 		}
 		states = states.pop();
-		return states, actions, rewards, dones
+		return [states, actions, rewards, dones]
 	}
 }
+
+export Agent
