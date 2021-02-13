@@ -89,6 +89,7 @@ class DQNAgent extends Agent {
 	// Take in number of episodes to train, update model
 	// References trainSteps and loggingPeriod
 	train(episodes) {
+		super.train();
 		[states, actions, rewards, dones] = this.rollout(this.replayBuffer.maxSize / 2);
 		this.replayBuffer.pushEpisode(states, actions, rewards, dones);
 		for (i = 0; i < episodes; i++) {

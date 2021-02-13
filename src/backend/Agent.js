@@ -5,7 +5,7 @@ export default class Agent {
 
 	constructor(env, trainSteps, loggingPeriod) {
 		this.env = env;
-		this.model = this.buildModel();
+		this.model = null;
 		this.trainSteps = trainSteps;
 		this.loggingPeriod = loggingPeriod;
 		this.loggedStates = [];
@@ -16,15 +16,18 @@ export default class Agent {
 	}
 
 	// Initialize model
-	buildModel() {
-	}
+	buildModel() {}
 
 	// Take in an observation, return an action
 	policy() {}
 
 	// Take in number of episodes to train, update model
 	// References trainSteps and loggingPeriod
-	train() {}
+	train() {
+		if (!this.model) {
+			this.model = this.buildModel();
+		}
+	}
 
 	// Takes `steps` number of steps and returns results
 	rollout(steps, episodic=false) {
