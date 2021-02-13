@@ -70,6 +70,10 @@ const ChartTabDropdownContainer = styled.div`
     width: 1.9em;
     filter: invert(100%) sepia(4%) saturate(7462%) hue-rotate(270deg) brightness(121%) contrast(94%);
   }
+
+  .active-dropdown {
+    transform: rotateX(180deg);
+  }
 `;
 
 const ChartTabDropdown = ({ tab, index, handleDropdownSelect }) => {
@@ -78,7 +82,7 @@ const ChartTabDropdown = ({ tab, index, handleDropdownSelect }) => {
     <ChartTabDropdownContainer>
       <div onClick={handleDropdownSelect.bind(null, index)} className="tab-name-wrapper">
         <span className="tab-name">{tab.name}</span>
-        <img className="dropdown-icon" src={ArrowDownSVG} alt="dropdown" />
+        <img className={tab.visible ? "dropdown-icon active-dropdown" : "dropdown-icon"} src={ArrowDownSVG} alt="dropdown" />
       </div>
       {tab.visible ? tab.layerNamesArr.map((layerName, index) => <ChartTabDropdownLayers key={index} layerName={layerName} />) : null}
     </ChartTabDropdownContainer>
