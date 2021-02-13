@@ -11,11 +11,7 @@ const ChartTab = () => {
     {
       header: 'Optimizers',
       sections: ['SGD', 'RMSSprop', 'Adagrad', 'Adam'],
-    },
-    {
-      header: 'Losses',
-      sections: ['CrossEntropy', 'Hinge', 'MSE', 'MAE'],
-    },
+    }
   ];
 
   const [ dropdownVisibleArr, setDropdownVisibleArr ] = usePopulate(dropdownContentArr, true, 'visible');

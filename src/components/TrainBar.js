@@ -12,14 +12,6 @@ const TrainBar = () => {
       header: 'Model Status',
       data: ['Training:', 'Accuracy:', 'Loss:', 'Validation Acc:', 'Validation Loss:'],
     },
-    {
-      header: 'Share',
-      sections: ['Export to Python', 'Export to Julia', 'Copy model link'],
-    },
-    {
-      header: 'Parameters',
-      sections: ['Click on a layer to view and change its parameters.'],
-    },
   ];
 
   // Gives each dropdown content a 'visible' field set to true by default
