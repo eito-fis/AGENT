@@ -1,4 +1,4 @@
-class Agent {
+export default class Agent {
 	/**
 	 * Agent Class
 	 */
@@ -53,5 +53,3 @@ class Agent {
 		return [states, actions, rewards, dones]
 	}
 }
-
-export Agent
