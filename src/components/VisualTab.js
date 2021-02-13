@@ -5,25 +5,15 @@ import DropdownContainer from './DropdownContainer';
 import Environment from './Environment';
 import { handleDropdownHeaderClick } from '../helper/handleDropdownHeaderClick';
 
-const EnvAgentTab = () => {
+const VisualTab = () => {
 
-  // Contains 'Layers', 'Activations', 'Templates'
   let dropdownContentArr = [
     {
-      header: 'Layers',
-      sections: ['Dense', 'Convolution', 'Max Pooling', 'More'],
-    },
-    {
-      header: 'Activations',
-      sections: ['ReLU', 'Sigmoid', 'Tanh'],
-    },
-    {
-      header: 'Templates',
-      sections: ['Blank', 'Default', 'ResNet'],
+      header: 'Classes',
+      sections: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
     },
   ];
 
-  // Gives each dropdown content a 'visible' field set to true by default
   const [ dropdownVisibleArr, setDropdownVisibleArr ] = usePopulate(dropdownContentArr, true, 'visible');
 
   // When user clicks on dropdown section => TO-DO
@@ -47,4 +37,4 @@ const EnvAgentTab = () => {
   );
 };
 
-export default EnvAgentTab;
+export default VisualTab;
