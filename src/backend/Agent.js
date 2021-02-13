@@ -1,4 +1,4 @@
-export default class Agent {
+export class Agent {
 	/**
 	 * Agent Class
 	 */

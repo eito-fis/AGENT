@@ -144,3 +144,5 @@ class DQNAgent extends Agent {
 		this.train = true;
 	}
 }
+
+export { DQNAgent };

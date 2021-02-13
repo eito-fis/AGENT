@@ -1,9 +1,9 @@
-import Agent from 'Agent';
+import { Agent } from 'Agent';
 import * as tf from '@tensorflow/tfjs';
 
 const MAXSTEPS = 1000
 
-class Reinforce extends Agent {
+class ReinforceAgent extends Agent {
 	constructor(env, trainSteps, loggingPeriod, learningRate=0.01,
 		batchSize=64, gamma=0.99) {
 		super(env, trainSteps, loggingPeriod);
@@ -108,3 +108,5 @@ class Reinforce extends Agent {
 		this.train = true;
 	}
 }
+
+export { ReinforceAgent };
