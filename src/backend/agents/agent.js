@@ -53,7 +53,6 @@ export class Agent {
 				}
 			}
 		}
-		states.pop();
 		return [states, actions, rewards, dones]
 	}
 }

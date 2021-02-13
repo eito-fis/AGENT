@@ -20,7 +20,7 @@ import { FrozenLakeEnv } from "../envs/FrozenLakeEnv";
 function test() {
 	console.log("Testing...");
 	const env = new FrozenLakeEnv();
-	const agent = buildAgent("DQN", env, 1000);
+	const agent = buildAgent("REINFORCE", env, 1000);
 	agent.train();
 }
 

@@ -1,10 +1,12 @@
 import { Agent } from './agent';
-import * as tf from '@tensorflow/tfjs';
+// import * as tf from '@tensorflow/tfjs';
+import * as _tf from '@tensorflow/tfjs-node'
+const tf = _tf.default
 
 const MAXSTEPS = 1000
 
 class ReinforceAgent extends Agent {
-	constructor(env, trainSteps, loggingPeriod, learningRate=0.01,
+	constructor(env, trainSteps, loggingPeriod, learningRate=0.00001,
 		batchSize=64, gamma=0.99) {
 		super(env, trainSteps, loggingPeriod);
 		this.optimizer = tf.train.adam(learningRate);
@@ -20,8 +22,8 @@ class ReinforceAgent extends Agent {
 		}
 
 		const model = tf.sequential();
-		const inputShape = env.getStateSpace();
-		const outputShape = env.getActionSpace();
+		const inputShape = this.env.getStateSpace();
+		const outputShape = this.env.getActionSpace();
 		hidden.forEach((hiddenSize, i) => {
 			model.add(tf.layers.dense({
 				"units": hiddenSize,
@@ -35,27 +37,28 @@ class ReinforceAgent extends Agent {
 
 	// Take in an observation, return an action
 	policy(obs) {
-		 return tf.tidy(() => {
-				const logits = this.model.apply(obs);		
-				if (this.isTrain) {
-					const action = tf.multinominal(logits, 1, normalized=false);
-				} else {
-					const action = tf.argmax(logits);
-				}
-				return action.dataSync();
+		return tf.tidy(() => {
+			const logits = this.model.apply([[obs]]);		
+			let action;
+			if (this.isTrain) {
+				action = tf.multinomial(logits, 1, false);
+			} else {
+				action = tf.argMax(logits);
+			}
+			
+			return action.dataSync()[0];
 		});
 	}
 
 	// Take in number of episodes to train, update model
 	// References trainSteps and loggingPeriod
-	train(episodes) {
+	train() {
 		super.train();
-		[states, actions, rewards, dones] = this.rollout(this.replayBuffer.maxSize / 2);
-		this.replayBuffer.pushEpisode(states, actions, rewards, dones);
-		for (i = 0; i < episodes; i++) {
-			[states, actions, rewards, dones] = this.rollout(MAXSTEPS, episodic=true);
+		let states, actions, rewards, dones;
+		for (let i = 0; i < this.trainSteps; i++) {
+			[states, actions, rewards, dones] = this.rollout(this.batchSize);
 			rewards = this.discountReward(rewards, dones);
-			loss = this.update(states, actions, rewards);
+			const loss = this.update(states, actions, rewards);
 			if (i != 0 && i % this.loggingPeriod == 0) {
 				this.log(loss);
 			}
@@ -63,9 +66,9 @@ class ReinforceAgent extends Agent {
 	}
 
 	discountReward(rewards, dones) {
-		discReward = new Array(rewards.length);
-		reward = 0
-		for (i = rewards.length - 1; i >= 0; i--) {
+		const discReward = new Array(rewards.length);
+		let reward = 0
+		for (let i = rewards.length - 1; i >= 0; i--) {
 			reward = rewards[i] + this.gamma * reward * (1 - dones[i]);
 			discReward[i] = reward
 		}
@@ -75,9 +78,9 @@ class ReinforceAgent extends Agent {
 	// Take an update step on the model, return the loss
 	update(states, actions, rewards) {
 		const lossFunc = () => tf.tidy(() => {
-			const states = tf.tensor1d(states, "float32");
-			const actions = tf.tensor1d(actions, "int32");
-			const rewards = tf.tensor1d(rewards, "int32");
+			states = tf.tensor2d(states, undefined, "float32");
+			actions = tf.tensor1d(actions, "int32");
+			rewards = tf.tensor1d(rewards, "int32");
 
 			const logits = this.model
 				.apply(states);
@@ -93,17 +96,18 @@ class ReinforceAgent extends Agent {
 			return loss
 		});
 
-		const loss = this.optimizer.minimize(lossFunc, returnCost=true);
+		const loss = this.optimizer.minimize(lossFunc, true);
 
-		return loss
+		return loss.dataSync()[0];
 	}
 
 	log(loss) {
-		this.isTrain = false;
-		states, _, rewards, _ = this.rollout(MAXSTEPS, episodic=true);
-		this.loggedSteps.push(states);
+		// this.isTrain = false;
+		let [states, _a, rewards, _d] = this.rollout(MAXSTEPS, true);
 		this.metrics["Losses"].push(loss);
 		this.metrics["Reward"].push(rewards.reduce((a, b) => a + b));
+		console.log(_a.slice(0, 10));
+		console.log(loss, rewards.reduce((a, b) => a + b));
 		this.isTrain = true;
 	}
 }
