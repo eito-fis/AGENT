@@ -65,7 +65,6 @@ class DQNAgent extends Agent {
 		const model = tf.sequential();
 		const inputShape = [this.env.getStateSpace()];
 		const outputShape = this.env.getActionSpace();
-		console.log(inputShape);
 		hidden.forEach((hiddenSize, i) => {
 			model.add(tf.layers.dense({
 				"units": hiddenSize,
@@ -100,10 +99,6 @@ class DQNAgent extends Agent {
 		this.replayBuffer.pushEpisode(states, actions, rewards, dones);
 		for (let i = 0; i < this.trainSteps; i++) {
 			[states, actions, rewards, dones] = this.rollout(32);
-			// for (let i = 0; i < states.length; i++) {
-			// 	console.log(states[i], actions[i], rewards[i], dones[i]);
-			// }
-			// console.log();
 			this.replayBuffer.pushEpisode(states, actions, rewards, dones);
 			let loss = this.update();
 			if (i != 0 && i % this.loggingPeriod == 0) {
@@ -115,7 +110,6 @@ class DQNAgent extends Agent {
 	// Take an update step on the model, return the loss
 	update() {
 		const samples = this.replayBuffer.sample(this.batchSize);
-		// console.log(samples);
 		const lossFunc = () => tf.tidy(() => {
 			const states = tf.tensor2d(samples.map(x => x[0]), undefined, "float32");
 			const actions = tf.tensor1d(samples.map(x => x[1]), "int32");
@@ -140,8 +134,6 @@ class DQNAgent extends Agent {
 		});
 
 		const {value, grads} = tf.variableGrads(lossFunc);
-		// console.log(this.model.layers[0]._trainableWeights[1].val.dataSync().slice(5));
-		// console.log(value.dataSync()[0]);
 		this.optimizer.applyGradients(grads);
 		tf.dispose(grads);
 		return value.dataSync()[0];
@@ -153,8 +145,6 @@ class DQNAgent extends Agent {
 		this.loggedStates.push(states);
 		this.metrics["Losses"].push(loss);
 		this.metrics["Reward"].push(rewards.reduce((a, b) => a + b));
-		// console.log(_a.slice(0, 5));
-		// console.log(loss, this.metrics["Reward"][this.metrics["Reward"].length - 1]);
 		this.isTrain = true;
 	}
 }
