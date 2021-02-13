@@ -2,24 +2,23 @@ import React from 'react';
 import { usePopulate } from '../hooks/usePopulate';
 import Dropdown from './Dropdown';
 import DropdownContainer from './DropdownContainer';
-import Environment from './Environment';
 import { handleDropdownHeaderClick } from '../helper/handleDropdownHeaderClick';
 
-const EnvAgentTab = () => {
+const TrainBar = () => {
 
-  // Contains 'Layers', 'Activations', 'Templates'
+  // Contains 'Model Status', 'Share', 'Parameters'
   let dropdownContentArr = [
     {
-      header: 'Layers',
-      sections: ['Dense', 'Convolution', 'Max Pooling', 'More'],
+      header: 'Model Status',
+      data: ['Training:', 'Accuracy:', 'Loss:', 'Validation Acc:', 'Validation Loss:'],
     },
     {
-      header: 'Activations',
-      sections: ['ReLU', 'Sigmoid', 'Tanh'],
+      header: 'Share',
+      sections: ['Export to Python', 'Export to Julia', 'Copy model link'],
     },
     {
-      header: 'Templates',
-      sections: ['Blank', 'Default', 'ResNet'],
+      header: 'Parameters',
+      sections: ['Click on a layer to view and change its parameters.'],
     },
   ];
 
@@ -32,8 +31,8 @@ const EnvAgentTab = () => {
   };
 
   return (
-    <>
-      <DropdownContainer>
+    <DropdownContainer>
+        <button className="train-button">Train</button>
         {dropdownContentArr.map((dropdownContent, index) => 
           <Dropdown 
             key={index} 
@@ -42,9 +41,7 @@ const EnvAgentTab = () => {
             headerCallback={handleDropdownHeaderClick.bind(null, dropdownVisibleArr, setDropdownVisibleArr)} 
             sectionCallback={handleDropdownSectionClick} />)}
       </DropdownContainer>
-      <Environment />
-    </>
   );
 };
 
-export default EnvAgentTab;
+export default TrainBar;
