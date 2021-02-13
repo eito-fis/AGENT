@@ -1,4 +1,4 @@
-import Agent from 'Agent'
+import Agent from 'Agent';
 import * as tf from '@tensorflow/tfjs';
 
 const MAXSTEPS = 1000
@@ -75,15 +75,16 @@ class DQNAgent extends Agent {
 	// Take in an observation, return an action
 	// Epsilon greedy if we are training
 	policy(obs) {
-		[logits, action] = tf.tidy(() => {
-				const logits = this.model.apply(obs);		
-				const action = tf.argmax(logits);
-				return [logits, action];
-		});
 		if (this.train && Math.random() < this.epsilon) {
-			action = Math.floor(Math.random() * this.env.getActionSpace());
+			return Math.floor(Math.random() * this.env.getActionSpace());
+		} else {
+			action = tf.tidy(() => {
+					const logits = this.model.apply(obs);		
+					const action = tf.argmax(logits);
+					return action.dataSync();
+			});
+			return action;
 		}
-		return action;
 	}
 
 	// Take in number of episodes to train, update model
