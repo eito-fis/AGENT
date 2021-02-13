@@ -31,28 +31,29 @@ export class Agent {
 
 	// Takes `steps` number of steps and returns results
 	rollout(steps, episodic=false) {
-		states = [];
-		actions = [];
-		rewards = [];
-		dones = [];
-		state = env.reset();
-		states.push(state);
-		for (i = 0; i < steps; i++) {
+		const states = [];
+		const actions = [];
+		const rewards = [];
+		const dones = [];
+		let state, nState, action, reward, done;
+		state = this.env.reset();
+		for (let i = 0; i < steps; i++) {
 			action = this.policy(state);
-			state, reward, done = this.env.step(action);
+			[nState, reward, done] = this.env.step(action);
 			states.push(state);
 			actions.push(action);
 			rewards.push(reward);
 			dones.push(done);
-			if (done) {
+			state = nState;
+			if (done == 1) {
 				if (episodic) {
 					break;
 				} else {
-					state = env.reset();
+					state = this.env.reset();
 				}
 			}
 		}
-		states = states.pop();
+		states.pop();
 		return [states, actions, rewards, dones]
 	}
 }

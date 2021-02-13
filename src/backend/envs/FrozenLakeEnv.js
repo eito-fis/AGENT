@@ -14,7 +14,7 @@ class FrozenLakeEnv extends Env {
 	  this.MAPS = {
         "4x4": [
             "SFFF",
-            "FHFH",
+            "FGFH",
             "FFFH",
             "HFFG"
         ],
@@ -75,10 +75,11 @@ class FrozenLakeEnv extends Env {
 	// Takes an action as an integer and updates the state
 	step(action) {
     if (this.done) {
-      alert("Environment is done. Reset.");
+      // alert("Environment is done. Reset.");
+      console.log("Environment is done. Reset.");
     }
     if (![0,1,2,3].includes(action)) {
-      alert("Invalid action!");
+      console.log("Invalid action!");
     }
     var curr_pos = this.state;
     var row = curr_pos[0];
@@ -93,7 +94,7 @@ class FrozenLakeEnv extends Env {
     } else if (action === 3) { // Up
       row = Math.max(row-1, 0);
     } else {
-      alert("Invalid action!");
+      console.log("Invalid action!");
     }
 
     this.state = [row, col];

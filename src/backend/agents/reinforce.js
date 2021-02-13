@@ -10,7 +10,7 @@ class ReinforceAgent extends Agent {
 		this.optimizer = tf.train.adam(learningRate);
 		this.batchSize = batchSize;
 		this.gamma = gamma;
-		this.train = true;
+		this.isTrain = true;
 	}
 
 	// Initialize model
@@ -37,7 +37,7 @@ class ReinforceAgent extends Agent {
 	policy(obs) {
 		 return tf.tidy(() => {
 				const logits = this.model.apply(obs);		
-				if (this.train) {
+				if (this.isTrain) {
 					const action = tf.multinominal(logits, 1, normalized=false);
 				} else {
 					const action = tf.argmax(logits);
@@ -99,12 +99,12 @@ class ReinforceAgent extends Agent {
 	}
 
 	log(loss) {
-		this.train = false;
+		this.isTrain = false;
 		states, _, rewards, _ = this.rollout(MAXSTEPS, episodic=true);
 		this.loggedSteps.push(states);
 		this.metrics["Losses"].push(loss);
 		this.metrics["Reward"].push(rewards.reduce((a, b) => a + b));
-		this.train = true;
+		this.isTrain = true;
 	}
 }
 
