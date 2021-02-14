@@ -6,8 +6,8 @@ const tf = _tf.default
 const MAXSTEPS = 1000
 
 class ReinforceAgent extends Agent {
-	constructor(env, trainSteps, loggingPeriod, learningRate=0.00001,
-		batchSize=64, gamma=0.99) {
+	constructor(env, trainSteps, loggingPeriod, learningRate=0.000005,
+		batchSize=512, gamma=0.9) {
 		super(env, trainSteps, loggingPeriod);
 		this.optimizer = tf.train.adam(learningRate);
 		this.batchSize = batchSize;

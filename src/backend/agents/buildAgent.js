@@ -1,15 +1,16 @@
 import { ReinforceAgent } from "./reinforce";
 import { DQNAgent } from "./dqn";
-import React from 'react'
+import { DDQNAgent } from "./ddqn";
 
 function buildAgent(name, env, trainSteps=10000, loggingPeriod=10) {
 	return new AGENTSLOOKUP[name](env, trainSteps, loggingPeriod);
 }
 
-const AGENTS = ["DQN", "REINFORCE"];
+const AGENTS = ["DQN", "REINFORCE", "DDQN"];
 
 const AGENTSLOOKUP = {
 	"DQN": DQNAgent,
+	"DDQN": DDQNAgent,
 	"REINFORCE": ReinforceAgent,
 }
 
@@ -22,7 +23,9 @@ function test() {
 	console.log("Testing...");
 	// const env = new FrozenLakeEnv();
 	const env = new CartpoleEnv();
-	const agent = buildAgent("REINFORCE", env, 1000);
+	// const agent = buildAgent("DQN", env, 100000);
+	// const agent = buildAgent("DDQN", env, 100000);
+	const agent = buildAgent("REINFORCE", env, 100000);
 	agent.train();
 }
 

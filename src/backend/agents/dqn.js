@@ -44,8 +44,8 @@ class ReplayBuffer {
 }
 
 class DQNAgent extends Agent {
-	constructor(env, trainSteps, loggingPeriod, bufferSize=128, learningRate=0.0001,
-		batchSize=32, gamma=0.99, epsilon=0.75) {
+	constructor(env, trainSteps, loggingPeriod, bufferSize=1024, learningRate=0.000001,
+		batchSize=128, gamma=0.99, epsilon=0.5) {
 		super(env, trainSteps, loggingPeriod);
 		this.replayBuffer = new ReplayBuffer(bufferSize);
 		this.optimizer = tf.train.adam(learningRate);
@@ -57,7 +57,7 @@ class DQNAgent extends Agent {
 	}
 
 	// Initialize model
-	buildModel(hidden=[32, 32]) {
+	buildModel(hidden=[8, 5]) {
 		if (!Array.isArray(hidden)) {
 			hidden = [hidden];
 		}
@@ -69,7 +69,7 @@ class DQNAgent extends Agent {
 			model.add(tf.layers.dense({
 				"units": hiddenSize,
 				"inputShape": i == 0 ? inputShape : undefined,
-				"activation": "relu",
+				"activation": "elu",
 			}));
 		});
 		model.add(tf.layers.dense({"units": outputShape}));
@@ -95,10 +95,11 @@ class DQNAgent extends Agent {
 	// References trainSteps and loggingPeriod
 	train() {
 		super.train();
-		let [states, actions, rewards, dones] = this.rollout(this.replayBuffer.maxSize / 2);
+		let [states, actions, rewards, dones] = this.rollout(this.replayBuffer.maxSize);
 		this.replayBuffer.pushEpisode(states, actions, rewards, dones);
 		for (let i = 0; i < this.trainSteps; i++) {
-			[states, actions, rewards, dones] = this.rollout(32);
+			this.epsilon = this.getEpsilon(i);
+			[states, actions, rewards, dones] = this.rollout(this.batchSize);
 			this.replayBuffer.pushEpisode(states, actions, rewards, dones);
 			let loss = this.update();
 			if (i != 0 && i % this.loggingPeriod == 0) {
@@ -145,7 +146,13 @@ class DQNAgent extends Agent {
 		this.loggedStates.push(states);
 		this.metrics["Losses"].push(loss);
 		this.metrics["Reward"].push(rewards.reduce((a, b) => a + b));
+		console.log(_a.slice(0, 10));
+		console.log(loss, rewards.reduce((a, b) => a + b));
 		this.isTrain = true;
+	}
+	
+	getEpsilon(step) {
+		return 1 - (step / this.trainSteps);
 	}
 }
 
