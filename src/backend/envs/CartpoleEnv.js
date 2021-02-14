@@ -33,6 +33,9 @@ class CartpoleEnv extends Env {
 
     this.done = false;
 
+    // Number of divisions for discretizing the environment state-action space
+    this.divs = 3
+
     this.reset();
   }
 
@@ -46,6 +49,27 @@ class CartpoleEnv extends Env {
 	// Will be used to determine the output dimensionality of the model
 	getActionSpace() {
     return this.nA;
+  }
+
+  // Return all possible states
+  getAllStates() {
+
+    var states = [];
+    for (var i=-this.xThresh; i < this.xThresh + 0.01; i=i+this.xThresh / this.divs) {
+      for (var j=-1; j < 2; j = j + 2) {
+         for (var k=-this.thetaThresh; k < this.thetaThresh; k=k+this.thetaThresh/this.divs) {
+           for (var l=-1; l < 2; l = l + 2) {
+             states.push([i, j, k, l]);
+           }
+         }
+      }
+    }
+    return states;
+  }
+
+  // Return all possible actions
+  getAllActions() {
+    return [0, 1];
   }
 
 	// Resets the environment and returns the new state
