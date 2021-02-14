@@ -1,3 +1,23 @@
+class MovingAverageBuffer {
+	constructor (bufferSize) {
+		this.buffer = [];
+		this.maxSize = bufferSize;
+	}
+
+	push(data) {
+		if (this.buffer.length >= this.maxSize) {
+			this.buffer.pop();
+		}
+		this.buffer.push(data);
+		return this.average
+	}
+
+	get average() {
+		return this.buffer.reduce((a, b) => a + b) / this.buffer.length
+	}
+
+}
+
 export class Agent {
 	/**
 	 * Agent Class
@@ -12,6 +32,12 @@ export class Agent {
 		this.metrics = {
 			"Losses": [],
 			"Reward": [],
+			"Moving Average Loss": [],
+			"Moving Average Reward": [],
+		};
+		this.movingAverages = {
+			"Loss": new MovingAverageBuffer(100),
+			"Reward": new MovingAverageBuffer(100),
 		}
 	}
 

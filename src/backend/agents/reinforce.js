@@ -106,8 +106,13 @@ class ReinforceAgent extends Agent {
 		// this.isTrain = false;
 		let [states, _a, rewards, _d] = this.rollout(MAXSTEPS, true);
 		this.loggedStates.push(states);
+		let sumReward = rewards.reduce((a, b) => a + b);
+		let avgLoss = this.movingAverages["Loss"].push(loss);
+		let avgReward = this.movingAverages["Reward"].push(sumReward);
 		this.metrics["Losses"].push(loss);
-		this.metrics["Reward"].push(rewards.reduce((a, b) => a + b));
+		this.metrics["Reward"].push(sumReward);
+		this.metrics["Moving Average Loss"].push(avgLoss);
+		this.metrics["Moving Average Reward"].push(avgReward);
 		console.log(_a.slice(0, 10));
 		console.log(loss, rewards.reduce((a, b) => a + b));
 		this.isTrain = true;
