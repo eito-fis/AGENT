@@ -14,6 +14,7 @@ const DivContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+	padding-top: 20px;
 `;
 
 const InnerDivContainer = styled.div`
@@ -21,7 +22,7 @@ const InnerDivContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 60vw;
   flex: 1;
 `;
 
@@ -56,6 +57,7 @@ const ChartTab = () => {
 
     const render = () => {
       if (training) {
+				console.log(divRef1);
         renderMetrics(agents, 'Losses', divRef1);
         renderMetrics(agents, 'Reward', divRef2);
         renderMetrics(agents, 'Moving Average Loss', divRef3);
@@ -88,15 +90,17 @@ const ChartTab = () => {
 
   return (
     <>
-      <DropdownContainer>
-        {dropdownContentArr.map((dropdownContent, index) => 
-          <Dropdown 
-            key={index} 
-            contentObj={dropdownContent} 
-            index={index} 
-            headerCallback={handleDropdownHeaderClick.bind(null, dropdownVisibleArr, setDropdownVisibleArr)} 
-            sectionCallback={handleDropdownSectionClick} />)}
-      </DropdownContainer>
+			{
+      // <DropdownContainer>
+      //   {dropdownContentArr.map((dropdownContent, index) => 
+      //     <Dropdown 
+      //       key={index} 
+      //       contentObj={dropdownContent} 
+      //       index={index} 
+      //       headerCallback={handleDropdownHeaderClick.bind(null, dropdownVisibleArr, setDropdownVisibleArr)} 
+      //       sectionCallback={handleDropdownSectionClick} />)}
+      // </DropdownContainer>
+			}
       <DivContainer>
         <InnerDivContainer>
           <h1>Losses</h1>

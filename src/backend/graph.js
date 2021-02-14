@@ -16,6 +16,7 @@ export function renderMetrics(agent, metric, container) {
 		{
 			xLabel: "Update steps",
 			yLabel: metric,
+			height: 170,
 		}
 	);
 }
