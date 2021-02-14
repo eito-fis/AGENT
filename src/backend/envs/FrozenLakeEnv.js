@@ -137,12 +137,12 @@ class FrozenLakeEnv extends Env {
 	render() {}
 
 	// Returns true if the current state is done, else false
-	isDone() {
-    curr_pos = this.state;
-    row = curr_pos[0];
-    col = curr_pos[1];
-    return this.desc[row][col] === "G";
-  }
+	// isDone() {
+  //   curr_pos = this.state;
+  //   row = curr_pos[0];
+  //   col = curr_pos[1];
+  //   return this.desc[row][col] === "G";
+  // }
 }
 
 export { FrozenLakeEnv };
