@@ -20,6 +20,13 @@ export default function EnvironmentNode() {
     }
   };
   
+  const name = {
+    'DQNAgent': 'DQN',
+    'ReinforceAgent': 'REINFORCE',
+    'DDQNAgent': 'DDQN',
+    'TabularQAgent': 'Tabular Q',
+  };
+  
   return (
     <>
       <Handle
@@ -28,7 +35,7 @@ export default function EnvironmentNode() {
         style={{ background: "#555" }}
         onConnect={(params) => console.log("handle onConnect", params)}
       />
-      <select value={agents ? agents.constructor.name.slice(0, -5).toUpperCase() : 'Default'} onChange={handleSelectChange.bind(null)}>
+      <select value={agents ? name[agents.constructor.name] : 'Default'} onChange={handleSelectChange.bind(null)}>
         <option value='Default'>Default</option>
         {AGENTS.map((item, index) => <option key={index} value={item}>{item}</option>)}
       </select>

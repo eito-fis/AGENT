@@ -26,6 +26,12 @@ export default function EnvironmentNode() {
     }
   };
 
+  const name = {
+    'Default': 'Default',
+    'CartpoleEnv': 'Cartpole',
+    'FrozenLakeEnv': 'Frozen Lake',
+  };
+
   return (
     <>
       <Handle
@@ -34,7 +40,7 @@ export default function EnvironmentNode() {
         style={{ background: "#555" }}
         onConnect={(params) => console.log("handle onConnect", params)}
       />
-      <select value={envs ? envs.constructor.name.slice(0, -3).match(/[A-Z][a-z]+/g).join(' ') : 'Default'} onChange={handleSelectChange.bind(null)}>
+      <select value={envs ? name[envs.constructor.name] : 'Default'} onChange={handleSelectChange.bind(null)}>
         <option value="Default">Default</option>
         {ENVS.map((item, index) => <option key={index} value={item}>{item}</option>)}
       </select>
