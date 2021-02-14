@@ -1,17 +1,28 @@
-// import src from "*.avif";
 import React, { useContext } from "react";
 import { Handle } from "react-flow-renderer";
 import { CurrentState } from "../../context/CurrentState";
 import { ENVS, buildEnv } from "../../../src/backend/envs/buildEnvs";
 
-export default function EnvironmentNode({ props }) {
+export default function EnvironmentNode() {
   
-  const { setEnvs } = useContext(CurrentState);
+  // Get context
+  const { envs, agents, setAgents, setEnvs } = useContext(CurrentState);
 
+  // User selects an env
   const handleSelectChange = (e) => {
-    const item = e.target.value;
-    if (e.target.value !== 'Default') {
-      setEnvs(buildEnv(item));
+
+    const item = e.target.value; // Extract options value
+
+    // Get and set env
+    const envsHolder = item !== 'Default' ? buildEnv(item) : null;
+    setEnvs(envsHolder);
+
+    // Replace env in Agents object
+    if (agents) {
+      // Clone ES6 class instance
+      const newAgents = Object.assign(Object.create(Object.getPrototypeOf(agents)), agents);
+      newAgents.env = envsHolder;
+      setAgents(newAgents);
     }
   };
 
@@ -23,7 +34,7 @@ export default function EnvironmentNode({ props }) {
         style={{ background: "#555" }}
         onConnect={(params) => console.log("handle onConnect", params)}
       />
-      <select onChange={handleSelectChange.bind(null)}>
+      <select value={envs ? envs.constructor.name.slice(0, -3).match(/[A-Z][a-z]+/g).join(' ') : 'Default'} onChange={handleSelectChange.bind(null)}>
         <option value="Default">Default</option>
         {ENVS.map((item, index) => <option key={index} value={item}>{item}</option>)}
       </select>

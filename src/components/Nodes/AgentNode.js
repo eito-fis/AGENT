@@ -3,17 +3,23 @@ import { Handle } from "react-flow-renderer";
 import { CurrentState } from "../../context/CurrentState";
 import { AGENTS, buildAgent } from "../../../src/backend/agents/buildAgent";
 
-export default function EnvironmentNode({ props}) {
+export default function EnvironmentNode() {
 
+  // Get context
   const { envs, agents, setAgents } = useContext(CurrentState);
 
+  // User selects an agent
   const handleSelectChange = (e) => {
-    const item = e.target.value;
-    if (e.target.value !== 'Default') {
+
+    const item = e.target.value; // Extract options value
+
+    if (item !== 'Default') {
       setAgents(buildAgent(item, envs));
+    } else {
+      setAgents(null);
     }
   };
-
+  
   return (
     <>
       <Handle
@@ -22,8 +28,8 @@ export default function EnvironmentNode({ props}) {
         style={{ background: "#555" }}
         onConnect={(params) => console.log("handle onConnect", params)}
       />
-      <select onChange={handleSelectChange.bind(null)}>
-        <option value="Default">Default</option>
+      <select value={agents ? agents.constructor.name.slice(0, -5).toUpperCase() : 'Default'} onChange={handleSelectChange.bind(null)}>
+        <option value='Default'>Default</option>
         {AGENTS.map((item, index) => <option key={index} value={item}>{item}</option>)}
       </select>
       <Handle
