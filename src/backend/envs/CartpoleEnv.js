@@ -95,16 +95,65 @@ class CartpoleEnv extends Env {
 	// Renders the current state
 	// Render how?
 	// Takes states?
-	render(states, context) {
+	render(states, context, width, height) {
 		for (let i = 0; i < states.length; i++) {
 			let [x, xDot, theta, thetaDot] = states[i];
 			console.log(x);
 
-			// render 
-			
+			// render
+      renderState(states[i], context, width, height);
 			// fps cap / delay
 		}
 	}
+
+  renderState(state, context) {
+    // Inspired by: https://github.com/tensorflow/tfjs-examples/blob/d974c7ffa87416510c5978684bee5aa0715459db/cart-pole/ui.js#L132
+    // Before calling:
+    //   Canvas needs to be cleared
+    //   Scale calculated
+		
+		const width = context.canvas.width;
+		const height = context.canvas.height;
+
+    let [x, xDot, theta, thetaDot] = state;
+    const xRange = 2 * this.xThresh;
+    const scale = width / xRange;
+    const halfW = width / 2;
+
+    context.clearRect(0, 0, width, height);
+
+    const yRail = 0.5 * height;
+    const cartW = this.cartWidth * scale;
+    const cartH = this.cartHeight * scale;
+
+    const xCart = x * scale + halfW;
+
+    // Draw the rail
+    context.beginPath();
+    context.strokeStyle = '#000000';
+    context.lineWidth = 10;
+    context.moveTo(0, yRail);
+    context.lineTo(width, yRail);
+    context.stroke();
+
+    // Draw the cart
+    context.beginPath();
+    context.strokeStyle = '#000000';
+    context.lineWidth = 2;
+    context.rect(xCart - cartW / 2, yRail - cartH / 2, cartW, cartH);
+    context.stroke();
+
+    // Draw the pole
+    const angle = theta + Math.PI/2;
+    const poleTopX = xCart + scale * (Math.cos(angle) *  this.poleLength);
+    const poleTopY = yRail - cartH/2 - scale * (Math.sin(angle) * this.poleLength);
+    context.beginPath();
+    context.strokeStyle = '#ffa500';
+    context.lineWidth = 6;
+    context.moveTo(xCart, yRail - cartH / 2);
+    context.lineTo(poleTopX, poleTopY);
+    context.stroke();
+  }
 
 	// Returns true if the current state is done, else false
 	isDone() {
