@@ -60,6 +60,26 @@ class FrozenLakeEnv extends Env {
     return this.nA;
   }
 
+  // Return all possible states
+  getAllStates() {
+    var states = [];
+    for (var i=0; i < this.nrow; i++) {
+      for (var j=0; j < this.ncol; j++) {
+        states.push([i, j]);
+      }
+    }
+    return states;
+  }
+
+  // Return all possible actions
+  getAllActions() {
+    var actions = [];
+    for (var i=0; i < this.nA; i++) {
+      actions.push(i);
+    }
+    return actions;
+  }
+
 	// Resets the environment and returns the new state
 	reset() {
     this.done = false;
