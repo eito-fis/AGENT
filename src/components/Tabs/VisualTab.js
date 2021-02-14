@@ -6,6 +6,12 @@ import { CurrentState } from "../../context/CurrentState";
 import DropdownContainer from '../DropDown/DropdownContainer';
 import { handleDropdownHeaderClick } from '../../helper/handleDropdownHeaderClick';
 import { SharingContext } from '../../context/SharingContext';
+import * as tf from '@tensorflow/tfjs';
+import styled from 'styled-components';
+
+const Canvas = styled.canvas`
+  width: 20rem;
+`;
 
 const VisualTab = () => {
 
@@ -30,15 +36,16 @@ const VisualTab = () => {
   const [ dropdownVisibleArr, setDropdownVisibleArr ] = usePopulate(dropdownContentArr, true, 'visible');
 
   // When user clicks on dropdown section => TO-DO
-  const handleDropdownSectionClick = (item, e) => {
+  const handleDropdownSectionClick = async (item, e) => {
     const length = agents.loggedStates.length;
     console.log('length:', length)
     let states = agents.loggedStates[length - 1];
     console.log('States:', states)
-    states.forEach((state) => {
-      console.log('State:', state)
-      envs.render(state, renderingContext);
-    });
+    for (let i = 0; i < states.length; i++) {
+      console.log('State:', states[i])
+      envs.renderState(states[i], renderingContext);
+      await tf.nextFrame();
+    }
   };
 
   return (

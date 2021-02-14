@@ -101,7 +101,7 @@ class CartpoleEnv extends Env {
 			console.log(x);
 
 			// render
-      renderState(states[i], context, width, height);
+      		this.renderState(states[i], context, width, height);
 			// fps cap / delay
 		}
 	}
