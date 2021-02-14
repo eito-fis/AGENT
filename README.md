@@ -1,4 +1,4 @@
-# [DLR](https://d1fsgorx82bxhr.cloudfront.net)
+# [DRL](https://d1fsgorx82bxhr.cloudfront.net)
 > A webapp that empowers users to get started with reinforcement learning instantly.
 
 Website live at: https://d1fsgorx82bxhr.cloudfront.net
