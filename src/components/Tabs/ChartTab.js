@@ -1,17 +1,17 @@
 import React from 'react';
-import { usePopulate } from '../hooks/usePopulate';
-import Dropdown from './Dropdown';
-import DropdownContainer from './DropdownContainer';
-import Environment from './Environment';
-import { handleDropdownHeaderClick } from '../helper/handleDropdownHeaderClick';
+import Dropdown from '../DropDown/Dropdown';
+import { usePopulate } from '../../hooks/usePopulate';
+import DropdownContainer from '../DropDown/DropdownContainer';
+import Environment from '../Environment';
+import { handleDropdownHeaderClick } from '../../helper/handleDropdownHeaderClick';
 
-const VisualTab = () => {
+const ChartTab = () => {
 
   let dropdownContentArr = [
     {
-      header: 'Classes',
-      sections: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-    },
+      header: 'Optimizers',
+      sections: ['SGD', 'RMSSprop', 'Adagrad', 'Adam'],
+    }
   ];
 
   const [ dropdownVisibleArr, setDropdownVisibleArr ] = usePopulate(dropdownContentArr, true, 'visible');
@@ -37,4 +37,4 @@ const VisualTab = () => {
   );
 };
 
-export default VisualTab;
+export default ChartTab;
