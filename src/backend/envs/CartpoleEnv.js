@@ -111,7 +111,7 @@ class CartpoleEnv extends Env {
     // Before calling:
     //   Canvas needs to be cleared
     //   Scale calculated
-		
+
 		const width = context.canvas.width;
 		const height = context.canvas.height;
 
@@ -131,7 +131,7 @@ class CartpoleEnv extends Env {
     // Draw the rail
     context.beginPath();
     context.strokeStyle = '#000000';
-    context.lineWidth = 10;
+    context.lineWidth = cartH/4;
     context.moveTo(0, yRail);
     context.lineTo(width, yRail);
     context.stroke();
