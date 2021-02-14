@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { usePopulate } from '../../hooks/usePopulate';
 import Dropdown from '../DropDown/Dropdown';
 import DropdownContainer from '../DropDown/DropdownContainer';
 import { handleDropdownHeaderClick } from '../../helper/handleDropdownHeaderClick';
+import { CurrentState } from "../../context/CurrentState";
 
 const TrainBar = () => {
+
+  const { envs, setEnvs, agents, setAgents } = useContext(CurrentState);
 
   // Contains 'Model Status', 'Share', 'Parameters'
   let dropdownContentArr = [
@@ -22,9 +25,17 @@ const TrainBar = () => {
     console.log(e);
   };
 
+  const handleOnTrainClick = () => {
+    if (agents) {
+      agents.train();
+    } else {
+      console.log('please dont run')
+    }
+  };  
+
   return (
     <DropdownContainer>
-        <button className="train-button">Train</button>
+        <button onClick={handleOnTrainClick} className="train-button">Train</button>
         {dropdownContentArr.map((dropdownContent, index) => 
           <Dropdown 
             key={index} 

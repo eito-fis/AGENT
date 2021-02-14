@@ -1,8 +1,8 @@
 import { Agent } from './agent';	
 import { DQNAgent } from './dqn';
-// import * as tf from '@tensorflow/tfjs';
-import * as _tf from '@tensorflow/tfjs-node'
-const tf = _tf.default
+import * as tf from '@tensorflow/tfjs';
+//import * as _tf from '@tensorflow/tfjs-node'
+//const tf = _tf.default
 
 
 const MAXSTEPS = 1000

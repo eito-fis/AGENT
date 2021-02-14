@@ -1,13 +1,13 @@
 import { Agent } from './agent';
-// import * as tf from '@tensorflow/tfjs';
-import * as _tf from '@tensorflow/tfjs-node'
-const tf = _tf.default
+import * as tf from '@tensorflow/tfjs';
+//import * as _tf from '@tensorflow/tfjs-node'
+//const tf = _tf.default
 
 const MAXSTEPS = 1000
 
 class ReinforceAgent extends Agent {
 	constructor(env, trainSteps, loggingPeriod, learningRate=0.000005,
-		batchSize=512, gamma=0.9) {
+		batchSize=256, gamma=0.9) {
 		super(env, trainSteps, loggingPeriod);
 		this.optimizer = tf.train.adam(learningRate);
 		this.batchSize = batchSize;
@@ -16,7 +16,7 @@ class ReinforceAgent extends Agent {
 	}
 
 	// Initialize model
-	buildModel(hidden=[32, 32]) {
+	buildModel(hidden=[8, 5]) {
 		if (!Array.isArray(hidden)) {
 			hidden = [hidden];
 		}

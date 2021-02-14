@@ -23,13 +23,13 @@ const OtherRoutes = () => {
   ]);
   return (
     <Container>
-      <Sidebar />
       <CurrentState.Provider value={value}>
+        <Sidebar />
         <Route path="/envagent" exact component={EnvAgentTab} />
         <Route path="/chart" exact component={ChartTab} />
         <Route path="/visual" exact component={VisualTab} />
+        <TrainBar />
       </CurrentState.Provider>
-      <TrainBar />
     </Container>
   );
 };
