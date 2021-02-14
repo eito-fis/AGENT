@@ -6,7 +6,7 @@ const Container = styled.div`
   flex: 1;
 `;
 
-const Environment = () => {
+const Environment = ({divRef}) => {
 
   const canvasRef = useRef(null);
   const [ renderingContext, setRenderingContext ] = useState(null);
@@ -16,9 +16,11 @@ const Environment = () => {
     setRenderingContext(context2d);
   }, []);
 
+
   return (
     <SharingContext.Provider value={renderingContext}>
       <Container>
+				<div ref={divRef}></div>
         <canvas ref={canvasRef} />
       </Container>
     </SharingContext.Provider>

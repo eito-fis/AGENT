@@ -52,7 +52,7 @@ class ReinforceAgent extends Agent {
 
 	// Take in number of episodes to train, update model
 	// References trainSteps and loggingPeriod
-	train() {
+	async train() {
 		super.train();
 		let states, actions, rewards, dones;
 		for (let i = 0; i < this.trainSteps; i++) {
@@ -62,6 +62,7 @@ class ReinforceAgent extends Agent {
 			if (i != 0 && i % this.loggingPeriod == 0) {
 				this.log(loss);
 			}
+			await tf.nextFrame();
 		}
 	}
 

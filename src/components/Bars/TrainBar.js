@@ -25,9 +25,9 @@ const TrainBar = () => {
     console.log(e);
   };
 
-  const handleOnTrainClick = () => {
+  const handleOnTrainClick = async () => {
     if (agents) {
-      agents.train();
+      await agents.train();
     } else {
       console.log('please dont run')
     }
