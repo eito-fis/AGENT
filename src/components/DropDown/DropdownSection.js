@@ -40,7 +40,7 @@ const DropdownSection = ({ section, sectionCallback, flag }) => {
       );
     }
     return (
-      <Container onClick={sectionCallback}>
+      <Container onClick={sectionCallback.bind(null, section)}>
         <span className="section">{section}</span>
       </Container>
     );

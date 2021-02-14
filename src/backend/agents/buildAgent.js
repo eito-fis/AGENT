@@ -16,17 +16,17 @@ const AGENTSLOOKUP = {
 
 export { buildAgent, AGENTS };
 
-import { FrozenLakeEnv } from "../envs/FrozenLakeEnv";
-import { CartpoleEnv } from "../envs/CartpoleEnv";
+// import { FrozenLakeEnv } from "../envs/FrozenLakeEnv";
+// import { CartpoleEnv } from "../envs/CartpoleEnv";
 
-function test() {
-	console.log("Testing...");
-	// const env = new FrozenLakeEnv();
-	const env = new CartpoleEnv();
-	// const agent = buildAgent("DQN", env, 100000);
-	// const agent = buildAgent("DDQN", env, 100000);
-	const agent = buildAgent("REINFORCE", env, 100000);
-	agent.train();
-}
+// function test() {
+// 	console.log("Testing...");
+// 	// const env = new FrozenLakeEnv();
+// 	const env = new CartpoleEnv();
+// 	// const agent = buildAgent("DQN", env, 100000);
+// 	// const agent = buildAgent("DDQN", env, 100000);
+// 	const agent = buildAgent("REINFORCE", env, 100000);
+// 	agent.train();
+// }
 
-test()
+// test()

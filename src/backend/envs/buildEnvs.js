@@ -1,4 +1,4 @@
-import { FroazenLakeEnv } from "./FrozenLakeEnv";
+import { FrozenLakeEnv } from "./FrozenLakeEnv";
 import { CartpoleEnv } from "./CartpoleEnv";
 
 function buildEnv(name) {
@@ -7,7 +7,7 @@ function buildEnv(name) {
 
 const ENVS = ["Frozen Lake", "Cartpole"];
 
-const AGENTSLOOKUP = {
+const ENVSLOOKUP = {
 	"Frozen Lake": FrozenLakeEnv,
 	"Cartpole": CartpoleEnv,
 }

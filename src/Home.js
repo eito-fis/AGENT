@@ -6,10 +6,10 @@ import "./Home.css";
 function Home() {
   return (
     <div>
-      <video src="/videos/video-1.mp4" autoPlay loop muted />
+      <video src="/videos/video-2.mp4" autoPlay loop muted />
       <div className="hero-container">
         <h1>Welcome to AGENT</h1>
-        <p>What are you waiting for?</p>
+        <p>Elegant Reinforcement Learning UI</p>
         <div className="hero-btns">
           <Button
             directTo="/envagent"
@@ -17,7 +17,7 @@ function Home() {
             buttonStyle="btn--outline"
             buttonSize="btn--large"
           >
-            Environment - Agent
+            Get Started
           </Button>
           <Button
             directTo="/"
