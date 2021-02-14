@@ -1,15 +1,40 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import Dropdown from '../DropDown/Dropdown';
 import { usePopulate } from '../../hooks/usePopulate';
 import DropdownContainer from '../DropDown/DropdownContainer';
-import Environment from '../Environment';
 import { handleDropdownHeaderClick } from '../../helper/handleDropdownHeaderClick';
 import { CurrentState } from "../../context/CurrentState";
 import { renderMetrics } from "../../backend/graph";
+import styled from 'styled-components';
+
+const DivContainer = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+const InnerDivContainer = styled.div`
+  margin-left: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex: 1;
+`;
 
 const ChartTab = () => {
-  const { envs, agents, setAgents } = useContext(CurrentState);
-	const divRef = useRef(null);
+
+  // Context state
+  const { agents, training } = useContext(CurrentState);
+
+  // Div referring to 'Losses'
+	const divRef1 = useRef(null);
+
+  // Div referring to 'Reward'
+  const divRef2 = useRef(null);
 
   let dropdownContentArr = [
     {
@@ -18,12 +43,39 @@ const ChartTab = () => {
     }
   ];
 
+  // On component mount, render graphs if training button has been hit
+  useEffect(() => {
+
+    let timeout;
+
+    const render = () => {
+      if (training) {
+        renderMetrics(agents, 'Losses', divRef1);
+        renderMetrics(agents, 'Reward', divRef2);
+
+        // Render graphs every 3 seconds
+        timeout = setTimeout(render.bind(null), 3000);
+      }
+    }
+
+    render();
+
+    return () => {
+      clearTimeout(timeout);
+    }
+  }, [training, agents]);
+
   const [ dropdownVisibleArr, setDropdownVisibleArr ] = usePopulate(dropdownContentArr, true, 'visible');
 
   // When user clicks on dropdown section => TO-DO
   const handleDropdownSectionClick = (metric) => {
-    console.log(metric);
-		renderMetrics(agents, metric, divRef);
+    if (training) {
+      if (metric === 'Losses') {
+        renderMetrics(agents, metric, divRef1);
+      } else {
+        renderMetrics(agents, metric, divRef2);
+      }
+    }
   };
 
   return (
@@ -37,7 +89,16 @@ const ChartTab = () => {
             headerCallback={handleDropdownHeaderClick.bind(null, dropdownVisibleArr, setDropdownVisibleArr)} 
             sectionCallback={handleDropdownSectionClick} />)}
       </DropdownContainer>
-      <Environment divRef={divRef} />
+      <DivContainer>
+        <InnerDivContainer>
+          <h1>Losses</h1>
+          <div ref={divRef1}></div>
+        </InnerDivContainer>
+        <InnerDivContainer>
+          <h1>Reward</h1>
+          <div ref={divRef2}></div>
+        </InnerDivContainer>
+      </DivContainer>
     </>
   );
 };

@@ -4,14 +4,16 @@ import NetworkSVG from '../../assets/images/layers.svg';
 import ProgressSVG from '../../assets/images/graph-up.svg';
 import VisualizationSVG from '../../assets/images/calculator-fill.svg';
 import GoBackSVG from '../../assets/images/arrow-return-left.svg';
-import { useHistory, useLocation } from 'react-router-dom';
+import SidebarIcon from './SidebarIcon';
 
-const SidebarContainer = styled.div`
+const Container = styled.div`
   height: 100vh;
   background-color: #a8a8bd;
-  width: 3.3rem;
+  width: 4.5rem;
   display: flex;
   flex-direction: column;
+  flex-basis: 70px;
+  flex-shrink: 0;
 
   .active {
     background-color: rgb(229,229,252);
@@ -28,46 +30,9 @@ const Sidebar = () => {
   ];
 
   return (
-    <SidebarContainer>
+    <Container>
       {toggleObjArr.map((toggleObj, index) => <SidebarIcon key={index} toggleObj={toggleObj} />)}
-    </SidebarContainer>
-  );
-};
-
-const SidebarIconContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px 0;
-  cursor: pointer;
-
-  :first-child {
-    margin-bottom: 5px;
-  }
-
-  :hover {
-    background-color: #CCC;
-  }
-
-  .icon {
-    width: 2rem;
-  }
-`;
-
-const SidebarIcon = ({ toggleObj }) => {
-
-  const history = useHistory();
-  const { pathname } = useLocation();
-
-  // Switch tabs
-  const switchTabs = (path) => {
-    history.push(path);
-  };
-
-  return (
-    <SidebarIconContainer onClick={switchTabs.bind(null, toggleObj.path)} className={pathname === toggleObj.path ? "icon-wrapper active" : "icon-wrapper"}>
-      <img className="icon" src={toggleObj.icon} alt="icon" />
-    </SidebarIconContainer>
+    </Container>
   );
 };
 

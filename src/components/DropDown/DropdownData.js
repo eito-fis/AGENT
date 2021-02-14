@@ -12,10 +12,10 @@ const Container = styled.div`
 `;
 
 // Dropdown items which are non-clickable ('Model Status')
-const DropdownData = ({ section, sectionCallback }) => {
+const DropdownData = ({ section }) => {
 
   return (
-    <Container onClick={sectionCallback}>
+    <Container>
       <span className="section">{section}</span>
     </Container>
   );

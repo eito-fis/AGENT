@@ -35,25 +35,28 @@ const Container = styled.div`
   }
 `;
 
+const Empty = styled.div`
+  text-align: center;
+  margin: 0 auto;
+  width: 80%;
+  margin-top: 10px;
+  font-size: 1.5rem;
+`;
+
 const Dropdown = ({ contentObj, index, headerCallback, sectionCallback }) => {
 
   // Render either sections or data (sections are clickable, data is not)
   const renderContent = () => {
     if (contentObj.visible) {
-      if (contentObj.sections &&contentObj.sections.length === 1) { // Render section differently 
-        return contentObj.sections.map((section, index) => 
-                            <DropdownSection 
-                              key={index} 
-                              section={section} 
-                              sectionCallback={sectionCallback}
-                              flag={true} />)
-      } else if ('data' in contentObj) { // Render data
+      if ('data' in contentObj) { // Render data
         return contentObj.data.map((section, index) => 
                             <DropdownData 
                               key={index} 
-                              section={section} 
-                              sectionCallback={sectionCallback} />)
-      } else { // Render section normally
+                              section={section} />)
+      } else { // Render section
+        if (contentObj.sections.length <= 0) {
+          return <Empty>Nothing to see here -- yet.</Empty>
+        }
         return contentObj.sections.map((section, index) => 
                             <DropdownSection 
                               key={index} 

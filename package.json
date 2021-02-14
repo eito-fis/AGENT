@@ -6,9 +6,6 @@
     "@mapbox/node-pre-gyp": "^1.0.0",
     "@tensorflow/tfjs": "^3.0.0",
     "@tensorflow/tfjs-vis": "^1.5.0",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-flow-renderer": "^8.8.0",
@@ -27,8 +24,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {

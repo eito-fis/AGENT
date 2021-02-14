@@ -17,39 +17,13 @@ const Container = styled.div`
   }
 `;
 
-const Flagged = styled.div`
-  padding: 10px 10px 0;
-  line-height: 1.5;
-  margin-top: 5px;
-
-  .section {
-    font-size: 1.1rem;
-  }
-`;
-
-// Dropdown items which are clickable ('Layers', 'Activations', 'Templates', 'Share', etc.)
-// If flag is set, render section as non-clickable (applies only to 'Parameters')
-const DropdownSection = ({ section, sectionCallback, flag }) => {
-
-  const renderContent = () => {
-    if (flag) { // Only renders for 'Templates'
-      return (
-        <Flagged>
-          <span className="section">{section}</span>
-        </Flagged>
-      );
-    }
-    return (
-      <Container onClick={sectionCallback.bind(null, section)}>
-        <span className="section">{section}</span>
-      </Container>
-    );
-  };
+// Dropdown items which are clickable ('Metrics', 'Controls')
+const DropdownSection = ({ section, sectionCallback }) => {
 
   return (
-    <>
-      {renderContent()}
-    </>
+    <Container onClick={sectionCallback.bind(null, section)}>
+      <span className="section">{section}</span>
+    </Container>
   );
 };
 

@@ -7,19 +7,27 @@ import TrainBar from "./Bars/TrainBar";
 import styled from "styled-components";
 import Sidebar from "./Bars/Sidebar";
 import { CurrentState } from "../context/CurrentState";
+
 const Container = styled.div`
   display: flex;
 `;
 
-// This is a separate component so we can have TrainBar mounted almost always
+// This is a separate component so we can have TrainBar mounted always
 const OtherRoutes = () => {
+
+  // Instantiate context state
   const [envs, setEnvs] = useState(null);
   const [agents, setAgents] = useState(null);
-  const value = useMemo(() => ({ envs, setEnvs, agents, setAgents }), [
+  const [ training, setTraining ] = useState(false);
+
+  // Optimize context state
+  const value = useMemo(() => ({ envs, setEnvs, agents, setAgents, training, setTraining }), [
     envs,
     setEnvs,
     agents,
     setAgents,
+    training,
+    setTraining,
   ]);
 
   return (
