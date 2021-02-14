@@ -105,6 +105,7 @@ class ReinforceAgent extends Agent {
 	log(loss) {
 		// this.isTrain = false;
 		let [states, _a, rewards, _d] = this.rollout(MAXSTEPS, true);
+		this.loggedStates.push(states);
 		this.metrics["Losses"].push(loss);
 		this.metrics["Reward"].push(rewards.reduce((a, b) => a + b));
 		console.log(_a.slice(0, 10));
