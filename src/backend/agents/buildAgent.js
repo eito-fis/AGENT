@@ -16,10 +16,12 @@ const AGENTSLOOKUP = {
 export { buildAgent, AGENTS };
 
 import { FrozenLakeEnv } from "../envs/FrozenLakeEnv";
+import { CartpoleEnv } from "../envs/CartpoleEnv";
 
 function test() {
 	console.log("Testing...");
-	const env = new FrozenLakeEnv();
+	// const env = new FrozenLakeEnv();
+	const env = new CartpoleEnv();
 	const agent = buildAgent("REINFORCE", env, 1000);
 	agent.train();
 }
