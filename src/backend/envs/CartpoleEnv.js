@@ -106,11 +106,15 @@ class CartpoleEnv extends Env {
 		}
 	}
 
-  renderState(state, context, width, height) {
+  renderState(state, context) {
     // Inspired by: https://github.com/tensorflow/tfjs-examples/blob/d974c7ffa87416510c5978684bee5aa0715459db/cart-pole/ui.js#L132
     // Before calling:
     //   Canvas needs to be cleared
     //   Scale calculated
+		
+		const width = context.canvas.width;
+		const height = context.canvas.height;
+
     let [x, xDot, theta, thetaDot] = state;
     const xRange = 2 * this.xThresh;
     const scale = width / xRange;
