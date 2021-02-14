@@ -1,7 +1,7 @@
 import { Agent } from './agent';
-// import * as tf from '@tensorflow/tfjs';
-import * as _tf from '@tensorflow/tfjs-node'
-const tf = _tf.default
+import * as tf from '@tensorflow/tfjs';
+// import * as _tf from '@tensorflow/tfjs-node'
+// const tf = _tf.default
 
 const MAXSTEPS = 1000
 
@@ -46,7 +46,8 @@ class TabularQAgent extends Agent {
 		super.train();
 		let states, actions, rewards, dones;
     let s, a, r, ns, done;
-    const acc_loss, loss;
+    let acc_loss;
+		let loss;
 		for (let i = 0; i < this.trainSteps; i++) {
       acc_loss = 0;
 			[states, actions, rewards, dones] = this.epsRollout(MAXSTEPS, true, 1-i/this.trainSteps);

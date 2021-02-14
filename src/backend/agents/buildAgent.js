@@ -1,17 +1,19 @@
 import { ReinforceAgent } from "./reinforce";
 import { DQNAgent } from "./dqn";
 import { DDQNAgent } from "./ddqn";
+import { TabularQAgent  } from "./tabularQlearning";
 
 function buildAgent(name, env, trainSteps=10000, loggingPeriod=10) {
 	return new AGENTSLOOKUP[name](env, trainSteps, loggingPeriod);
 }
 
-const AGENTS = ["DQN", "REINFORCE", "DDQN"];
+const AGENTS = ["DQN", "REINFORCE", "DDQN", "Tabular Q"];
 
 const AGENTSLOOKUP = {
 	"DQN": DQNAgent,
 	"DDQN": DDQNAgent,
 	"REINFORCE": ReinforceAgent,
+	"Tabular Q": TabularQAgent,
 }
 
 export { buildAgent, AGENTS };
