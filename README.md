@@ -2,6 +2,7 @@
 > A webapp that empowers users to get started with reinforcement learning instantly.
 
 Website live at: https://d1fsgorx82bxhr.cloudfront.net
+Devpost at https://devpost.com/software/drl
 
 <p align="center">
   <img src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/001/397/531/datas/gallery.jpg" />
