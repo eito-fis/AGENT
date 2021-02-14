@@ -95,7 +95,16 @@ class CartpoleEnv extends Env {
 	// Renders the current state
 	// Render how?
 	// Takes states?
-	render() {}
+	render(states, context) {
+		for (let i = 0; i < states.length; i++) {
+			let [x, xDot, theta, thetaDot] = states[i];
+			console.log(x);
+
+			// render 
+			
+			// fps cap / delay
+		}
+	}
 
 	// Returns true if the current state is done, else false
 	isDone() {
