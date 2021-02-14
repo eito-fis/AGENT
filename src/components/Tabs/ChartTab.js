@@ -36,6 +36,12 @@ const ChartTab = () => {
   // Div referring to 'Reward'
   const divRef2 = useRef(null);
 
+  // Div referring to 'Average Loss'
+	const divRef3 = useRef(null);
+
+  // Div referring to 'Average Reward'
+  const divRef4 = useRef(null);
+
   let dropdownContentArr = [
     {
       header: 'Metrics',
@@ -52,6 +58,8 @@ const ChartTab = () => {
       if (training) {
         renderMetrics(agents, 'Losses', divRef1);
         renderMetrics(agents, 'Reward', divRef2);
+        renderMetrics(agents, 'Moving Average Loss', divRef3);
+        renderMetrics(agents, 'Moving Average Reward', divRef4);
 
         // Render graphs every 3 seconds
         timeout = setTimeout(render.bind(null), 3000);
@@ -97,6 +105,14 @@ const ChartTab = () => {
         <InnerDivContainer>
           <h1>Reward</h1>
           <div ref={divRef2}></div>
+        </InnerDivContainer>
+        <InnerDivContainer>
+          <h1>Moving Average Loss</h1>
+          <div ref={divRef3}></div>
+        </InnerDivContainer>
+        <InnerDivContainer>
+          <h1>Moving Average Reward</h1>
+          <div ref={divRef4}></div>
         </InnerDivContainer>
       </DivContainer>
     </>
